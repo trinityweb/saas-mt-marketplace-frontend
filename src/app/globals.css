@@ -1,26 +1,161 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Tema claro: Colores exactos de TiendaVecina optimizados para marketplace público */
+    --background: 0 0% 100%;               /* #FFFFFF - Blanco para marketplace público */
+    --foreground: 240 10% 15%;             /* #222431 - Texto principal oscuro */
+    --card: 0 0% 98%;                      /* #FAFAFA - Gris clarito para tarjetas */
+    --card-foreground: 240 10% 15%;        /* #222431 */
+    --popover: 0 0% 98%;                   /* #FAFAFA - Gris clarito */
+    --popover-foreground: 240 10% 15%;     /* #222431 */
+    --primary: 270 91% 56%;                /* #9333EA - Púrpura TiendaVecina */
+    --primary-foreground: 0 0% 100%;       /* #FFFFFF */
+    --secondary: 186 100% 43%;             /* #06B6D4 - Cyan TiendaVecina */
+    --secondary-foreground: 0 0% 100%;     /* #FFFFFF */
+    --muted: 270 20% 96%;                  /* #F5F1FB - Púrpura gris muy claro */
+    --muted-foreground: 240 10% 45%;       /* #666B7A */
+    --accent: 186 30% 92%;                 /* #EBF7F9 - Cyan gris muy claro */
+    --accent-foreground: 240 10% 15%;      /* #222431 */
+    --destructive: 0 84% 60%;              /* #E74C3C - Rojo para destructivos */
+    --destructive-foreground: 0 0% 100%;   /* #FFFFFF */
+    --border: 270 15% 93%;                 /* #F0EBF6 - Bordes gris púrpura muy claro */
+    --input: 270 15% 93%;                  /* #F0EBF6 */
+    --ring: 270 91% 56%;                   /* #9333EA - Púrpura principal */
+    --radius: 0.75rem;
+    /* Variables adicionales para marketplace */
+    --marketplace-header: 0 0% 98%;        /* #FAFAFA - Header marketplace */
+    --marketplace-nav: 270 20% 96%;        /* #F5F1FB - Navegación */
+    --marketplace-search: 0 0% 100%;       /* #FFFFFF - Fondo de búsqueda */
+  }
+
+  .dark {
+    /* Tema oscuro: Más suave para el marketplace público */
+    --background: 240 15% 8%;              /* #14141A - Fondo oscuro suave */
+    --foreground: 270 20% 92%;             /* #E8E5F3 - Texto gris claro */
+    --card: 240 15% 12%;                   /* #1F2028 - Gris oscuro para tarjetas */
+    --card-foreground: 270 20% 92%;        /* #E8E5F3 */
+    --popover: 240 15% 12%;                /* #1F2028 */
+    --popover-foreground: 270 20% 92%;     /* #E8E5F3 */
+    --primary: 270 91% 65%;                /* #A855F7 - Púrpura más brillante */
+    --primary-foreground: 240 15% 8%;      /* #14141A */
+    --secondary: 186 100% 50%;             /* #00BCD4 - Cyan más brillante */
+    --secondary-foreground: 240 15% 8%;    /* #14141A */
+    --muted: 240 15% 16%;                  /* #292A33 - Gris medio */
+    --muted-foreground: 270 10% 70%;       /* #A8A5B8 */
+    --accent: 240 15% 18%;                 /* #2E2F3C - Gris para acentos */
+    --accent-foreground: 270 20% 92%;      /* #E8E5F3 */
+    --destructive: 0 62% 50%;              /* #D32F2F - Rojo para destructivos */
+    --destructive-foreground: 0 0% 98%;    /* #FAFAFA */
+    --border: 240 15% 18%;                 /* #2E2F3C */
+    --input: 240 15% 18%;                  /* #2E2F3C */
+    --ring: 270 91% 65%;                   /* #A855F7 */
+    /* Variables adicionales para marketplace oscuro */
+    --marketplace-header: 240 15% 12%;     /* #1F2028 - Header marketplace */
+    --marketplace-nav: 240 15% 16%;        /* #292A33 - Navegación */
+    --marketplace-search: 240 15% 12%;     /* #1F2028 - Fondo de búsqueda */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Componentes específicos del marketplace */
+  .marketplace-header {
+    @apply bg-[hsl(var(--marketplace-header))] border-b border-border;
+  }
+
+  .marketplace-nav {
+    @apply bg-[hsl(var(--marketplace-nav))] border-b border-border;
+  }
+
+  .marketplace-search {
+    @apply bg-[hsl(var(--marketplace-search))] border border-border rounded-lg;
+  }
+
+  .product-card {
+    @apply rounded-lg border bg-card p-4 shadow-sm transition-all duration-200 hover:shadow-md hover:scale-[1.02];
+  }
+
+  .category-item {
+    @apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer;
+  }
+
+  .search-filter {
+    @apply rounded-md border border-input bg-transparent px-3 py-2 text-sm transition-colors hover:bg-accent;
+  }
+
+  .marketplace-button {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .seller-badge {
+    @apply inline-flex items-center rounded-full bg-secondary/10 px-2.5 py-0.5 text-xs font-medium text-secondary border border-secondary/20;
+  }
+
+  .price-tag {
+    @apply font-semibold text-lg text-primary;
+  }
+
+  .animate-fade-in {
+    @apply transition-opacity duration-300;
+  }
+
+  .animate-slide-up {
+    @apply transition-transform duration-300 ease-out;
+  }
+}
+
+/* Animaciones específicas del marketplace */
+@keyframes productHover {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+@keyframes fadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.product-hover {
+  animation: productHover 0.2s ease-in-out;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* Responsive breakpoints específicos */
+@media (max-width: 640px) {
+  .product-grid {
+    @apply grid-cols-2 gap-3;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .product-grid {
+    @apply grid-cols-3 gap-4;
+  }
+}
+
+@media (min-width: 1025px) {
+  .product-grid {
+    @apply grid-cols-4 gap-6;
+  }
 }
